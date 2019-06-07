@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col">
+        <h1>Search:</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <form>
+            <div class="form-group">
+                <div class="input-group">
+
+                    <input type="text"
+                           name="search_box"
+                           [(ngModel)]="term"
+                           (keyup)="search()"
+                           class="form-control form-control-lg"
+                           placeholder="Start typing for anything book related...">
+
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary"
+                                (click)="clearSearch$.next()"
+                                type="button">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<app-book-results [results]="books"></app-book-results>
