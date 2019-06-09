@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
 import * as _ from 'lodash';
+import { Book } from '../book/book.model';
 
 @Component({
   selector: 'app-book-results',
@@ -10,7 +11,7 @@ export class BookResultsComponent implements OnInit, OnChanges {
   readonly numbeOfResultPerRow = 3;
 
   @Input()
-  results: any;
+  results: Array<Book>;
 
   renderResults: Array<Array<any>>;
 

@@ -10,6 +10,7 @@ import { BookSearchComponent } from './book-search/book-search.component';
 import { HeaderComponent } from './header/header.component';
 import { BookResultsComponent } from './book-results/book-results.component';
 import { BookComponent } from './book/book.component';
+import { TruncateTextPipe } from './pipes/truncate-text.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { BookComponent } from './book/book.component';
     BookSearchComponent,
     HeaderComponent,
     BookResultsComponent,
-    BookComponent
+    BookComponent,
+    TruncateTextPipe
   ],
   imports: [
     BrowserModule,
