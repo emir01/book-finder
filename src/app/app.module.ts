@@ -1,31 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { BooksModule } from './books/books.module';
+import { CoreModule } from './core/core.module';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
-import { BookSearchComponent } from './book-search/book-search.component';
-import { HeaderComponent } from './header/header.component';
-import { BookResultsComponent } from './book-results/book-results.component';
-import { BookComponent } from './book/book.component';
-import { TruncateTextPipe } from './pipes/truncate-text.pipe';
-
 @NgModule({
   declarations: [
-    AppComponent,
-    BookSearchComponent,
-    HeaderComponent,
-    BookResultsComponent,
-    BookComponent,
-    TruncateTextPipe
+    AppComponent
   ],
   imports: [
-    BrowserModule,
+    CoreModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    BooksModule
   ],
   providers: [],
   bootstrap: [AppComponent]

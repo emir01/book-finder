@@ -1,18 +1,18 @@
 <div class="card h-100">
   <h5 class="card-header">
-    {{book.title}}
+    {{result.title}}
   </h5>
   <img class="card-img-top"
-       *ngIf="book.imageLink"
-       [src]="book.imageLink"
+       *ngIf="result.imageLink"
+       [src]="result.imageLink"
        alt="Card image cap">
   <div class="card-body">
     <p class="card-text"
-       [innerHTML]="book.description | truncatetext:200 ">
+       [innerHTML]="result.description | truncatetext:200 ">
     </p>
   </div>
   <div class="card-footer">
-    <a [href]="book.link"
+    <a [href]="result.link"
        class="btn btn-primary float-right">View</a>
   </div>
 </div>

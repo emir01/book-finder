@@ -22,7 +22,6 @@ export class TruncateTextPipe implements PipeTransform {
             const lastSpace = truncatedText.lastIndexOf(' ');
             if (lastSpace === -1) { break; }
             truncatedText = truncatedText.slice(0, lastSpace).replace(/[!,.?;:]$/, '');
-
         }
 
         return truncatedText + elipses;

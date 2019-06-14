@@ -1,7 +1,7 @@
-import { BookSearchService } from './../services/search/book-search.service';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Book } from '../book/book.model';
+import { Result } from 'src/app/core/result/result.model';
+import { BookSearchService } from '../services/search/book-search.service';
 
 @Component({
   selector: 'app-book-search',
@@ -15,14 +15,14 @@ export class BookSearchComponent implements OnInit {
   searchTerm$ = new Subject<string>();
   clearSearch$ = new Subject();
 
-  books: Array<Book>;
+  bookResults: Array<Result>;
 
   constructor(private searchService: BookSearchService) {
     this
       .searchService
       .searchBooks(this.searchTerm$, this.clearSearch$)
       .subscribe(books => {
-        this.books = books;
+        this.bookResults = books;
       });
 
     this.clearSearch$.subscribe(() => this.term = '');
