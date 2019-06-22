@@ -9,7 +9,6 @@ import { BookSearchService } from '../services/search/book-search.service';
   styleUrls: ['./book-search.component.less']
 })
 export class BookSearchComponent implements OnInit {
-
   term = '';
 
   searchTerm$ = new Subject<string>();
@@ -28,11 +27,12 @@ export class BookSearchComponent implements OnInit {
     this.clearSearch$.subscribe(() => this.term = '');
   }
 
-
-
   search() {
     this.searchTerm$.next(this.term);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+    this.searchTerm$.next('game of thrones');
+  }
 }

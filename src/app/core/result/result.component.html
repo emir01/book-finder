@@ -1,11 +1,13 @@
 <div class="card h-100">
   <h5 class="card-header">
-    {{result.title}}
+    <a [routerLink]="result.internalLink">
+      {{result.title}}
+    </a>
   </h5>
   <img class="card-img-top"
        *ngIf="result.imageLink"
        [src]="result.imageLink"
-       alt="Card image cap">
+       alt="result_image">
   <div class="card-body">
     <p class="card-text"
        [innerHTML]="result.description | truncatetext:200 ">

@@ -6,13 +6,15 @@ import { ResultComponent } from './result/result.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { SearchNavigationComponent } from './search-navigation/search-navigation.component';
 
 @NgModule({
     declarations: [
         ResultsComponent,
         HeaderComponent,
         ResultComponent,
-        TruncateTextPipe
+        TruncateTextPipe,
+        SearchNavigationComponent
     ],
     imports: [
         RouterModule,
@@ -24,6 +26,7 @@ import { RouterModule } from '@angular/router';
         FormsModule,
         RouterModule,
 
+        SearchNavigationComponent,
         ResultsComponent,
         HeaderComponent,
         ResultComponent,

@@ -1,3 +1,4 @@
+import { BookMapper } from './book-mapper';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, merge, mapTo, map } from 'rxjs/operators';
@@ -5,59 +6,67 @@ import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash';
 import { environment } from 'src/environments/environment';
 import { Result } from 'src/app/core/result/result.model';
+import { BookModel } from '../../models/book-model';
 
 @Injectable()
 export class BookSearchService {
   private API_KEY;
-  baseUrl = 'https://www.googleapis.com/books/v1/volumes?q=';
+  private searchBaseUrl = 'https://www.googleapis.com/books/v1/volumes?q=';
+  private detailsBaseUrl = 'https://www.googleapis.com/books/v1/volumes/';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private mapper: BookMapper) {
     this.API_KEY = environment.booksApiKey;
+  }
+
+  getBookDetail(bookId: string): Observable<BookModel> {
+    return this.bookDetailsApi(bookId)
+      .pipe(
+        map(results => this.mapper.MapAnyToEntity(results))
+      );
   }
 
   searchBooks(searchTerm: Observable<string>, clearSearch: Observable<any>): Observable<Array<Result>> {
     return searchTerm
       .pipe(
         debounceTime(400),
+        merge(
+          clearSearch
+            .pipe(
+              mapTo('')
+            )
+        ),
         distinctUntilChanged(),
-        switchMap(term => this.booksApi(term)),
-        merge(clearSearch.pipe(mapTo([]))),
+        switchMap(term => this.bookSearchApi(term)),
         map(results => this.extractResults(results))
       );
   }
 
-  extractResults(bookResult: any): Array<Result> {
+  private extractResults(bookResult: any): Array<Result> {
     const results: Array<Result> = [];
-    const mapper = this._mapBookToResult;
 
     _.forEach(bookResult.items, item => {
-      results.push(mapper(item));
+      results.push(this.mapper.MapAnyToResult(item));
     });
 
     return results;
   }
 
-  booksApi(term) {
+  private bookSearchApi(term) {
     if (_.isString(term) && _.trim(term) !== '') {
-      const searchUrl = `${this.baseUrl}${term}&key=${this.API_KEY}`;
+      const searchUrl = `${this.searchBaseUrl}${term}&key=${this.API_KEY}`;
       return this.httpClient.get(searchUrl);
     } else {
       return of([]);
     }
   }
 
-  _mapBookToResult(book: any): Result {
-    const result = new Result();
-
-    result.title = book.volumeInfo.title;
-    result.description = book.volumeInfo.description;
-
-    if (_.has(book, 'volumeInfo.imageLinks.smallThumbnail')) {
-      result.imageLink = book.volumeInfo.imageLinks.smallThumbnail;
+  private bookDetailsApi(bookId) {
+    console.log('book details api');
+    if (_.isString(bookId) && _.trim(bookId) !== '') {
+      const searchUrl = `${this.detailsBaseUrl}${bookId}?key=${this.API_KEY}`;
+      return this.httpClient.get(searchUrl);
+    } else {
+      return of(undefined);
     }
-
-    result.link = book.selfLink;
-
-    return result;
   }
 }

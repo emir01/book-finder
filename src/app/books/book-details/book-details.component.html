@@ -1,0 +1,25 @@
+<app-search-navigation></app-search-navigation>
+
+<div *ngIf="(book$ | async) as book; else loading">
+
+  <div class="card">
+    <h5 class="card-header">{{book.title}}</h5>
+
+    <img class="card-img-top book-details-image mx-auto p-4"
+         *ngIf="book.imageLink"
+         [src]="book.imageLink"
+         alt="result_image">
+
+    <div class="card-body">
+      <p class="card-text"
+         [innerHTML]=book.description></p>
+
+      <a [href]="book.link"
+         class="btn btn-primary float-right">Volume Details</a>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  Loading...
+</ng-template>
